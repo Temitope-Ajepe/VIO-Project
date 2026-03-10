@@ -1,0 +1,16 @@
+# TUM VI Dataset Configuration
+
+camera:
+  fx: 190.978477
+  fy: 190.973307
+  cx: 254.931706
+  cy: 256.897442
+  width: 512
+  height: 512
+
+imu:
+  accelerometer_noise: 0.00059
+  gyroscope_noise: 0.00028
+  update_rate: 200
+
+seed: 0
