@@ -21,7 +21,7 @@
     vio-project/
 
 ├── src/
-│ ├── vo/ #Part 1 1: Monocular Visual Odometry
+│ ├── vo/ #Part 1: Monocular Visual Odometry
 │ │ ├── feature_detection.py # ORB/SIFT feature detection
 │ │ ├── feature_matching.py # BFMatcher + ratio test
 │ │ ├── essential_matrix.py # Essential matrix + RANSAC
