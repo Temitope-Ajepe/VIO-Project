@@ -6,6 +6,7 @@ import numpy as np
 import yaml
 import os
 import sys
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -28,14 +29,17 @@ def run_vo_pipeline(sequence_path, config_path, output_path):
     K = get_camera_matrix(config)
     print(f"Loaded {len(loader)} frames from {sequence_path}")
 
-    # Initialize
+# Initialize
     trajectory = []
     poses = []
     prev_img = loader.get_image(0)
     prev_kp, prev_des = detect_features(prev_img)
+    frame_times = []
 
     # Main loop
     for i in range(1, len(loader)):
+        start_time = time.time()
+
         curr_img = loader.get_image(i)
         curr_kp, curr_des = detect_features(curr_img)
         matches = match_features(prev_des, curr_des)
@@ -51,41 +55,33 @@ def run_vo_pipeline(sequence_path, config_path, output_path):
         R, t = decompose_essential_matrix(E, pts1, pts2, K)
         trajectory, poses = update_trajectory(trajectory, poses, R, t)
 
+        end_time = time.time()
+        frame_times.append(end_time - start_time)
+
         if i % 50 == 0:
             print(f"Processed frame {i}/{len(loader)}")
 
         prev_img = curr_img
         prev_kp, prev_des = curr_kp, curr_des
 
-    save_trajectory(trajectory, output_path)
+    # Print runtime stats
+    mean_time = np.mean(frame_times)
+    fps = 1.0 / mean_time
+    print(f"\n Runtime Statistics")
+    print(f"Mean time per frame: {mean_time*1000:.2f} ms")
+    print(f"Frames per second:   {fps:.2f} FPS")
+    print(f"Total frames:        {len(frame_times)}")
+    print(f"\n")
+
+    save_trajectory(
+        trajectory, 
+        output_path,
+        timestamps=loader.timestamps[:len(trajectory)]
+    )
     print(f"Trajectory saved to {output_path}")
     return trajectory
 
 
-""" 
-if __name__ == "__main__":
-    os.makedirs("results/trajectories", exist_ok=True)
-    os.makedirs("results/plots", exist_ok=True)
-    os.makedirs("results/tables", exist_ok=True)
-
-    run_vo_pipeline(
-        sequence_path="data/dataset-room2_512_16",
-        config_path="configs/tum_vi.yaml",
-        output_path="results/trajectories/room2_vo.txt"
-    )#
-    # """
-""""
-if __name__ == "__main__":
-    os.makedirs("results/trajectories", exist_ok=True)
-    os.makedirs("results/plots", exist_ok=True)
-    os.makedirs("results/tables", exist_ok=True)
-
-    run_vo_pipeline(
-        sequence_path="data/dataset-corridor3_512_16",
-        config_path="configs/tum_vi.yaml",
-        output_path="results/trajectories/corridor3_vo.txt"
-    )
-"""
 
 
 if __name__ == "__main__":
@@ -99,3 +95,9 @@ if __name__ == "__main__":
     config_path="configs/tum_vi.yaml",
     output_path="results/trajectories/outdoors5_vo.txt"
 )
+
+
+
+
+
+

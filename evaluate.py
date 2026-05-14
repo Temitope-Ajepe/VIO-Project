@@ -8,7 +8,8 @@ from src.evaluation.rpe import compute_rpe, print_results
 # Load estimated trajectory
 #traj_est = load_trajectory('results/trajectories/room2_vo.txt')
 #traj_est = load_trajectory('results/trajectories/corridor3_vo.txt')
-traj_est = load_trajectory('results/trajectories/outdoors5_vo.txt')
+#traj_est = load_trajectory('results/trajectories/outdoors5_vo.txt')
+traj_est = load_trajectory('results/trajectories/room2_vio.txt')
 
 # Load ground truth
 #gt_data = np.loadtxt('data/dataset-room2_512_16/dso/gt_imu.csv',
@@ -40,7 +41,8 @@ print(f'RPE: {rpe:.4f} meters/100m')
 # Print clean results table
 #print_results('Room2', ate, rpe)
 #print_results('Corridor3', ate, rpe)
-print_results('Outdoors5', ate, rpe)
+#print_results('Outdoors5', ate, rpe)
+print_results('Room2 VIO', ate, rpe)
 
 # Plot aligned trajectory
 #plot_trajectory_2d(
@@ -53,7 +55,9 @@ print_results('Outdoors5', ate, rpe)
     #'Corridor3', 'results/plots/corridor3_vo.png'
 #)
 
-plot_trajectory_2d(
-    traj_est_aligned, traj_gt,
-    'Outdoors5', 'results/plots/outdoors5_vo.png'
-)
+#plot_trajectory_2d(
+    #traj_est_aligned, traj_gt,
+    #'Outdoors5', 'results/plots/outdoors5_vo.png'
+#)
+plot_trajectory_2d(traj_est_aligned, traj_gt,
+    'Room2 VIO', 'results/plots/room2_vio.png')
