@@ -140,7 +140,11 @@ def run_vio_pipeline(sequence_path, config_path, output_path):
         prev_timestamp = curr_timestamp
 
     # ── 4. Save trajectory ───────────────────────────────
-    save_trajectory(trajectory, output_path)
+    save_trajectory(
+    trajectory,
+    output_path,
+    timestamps=loader.timestamps[:len(trajectory)]
+)
     print(f"VIO Trajectory saved to {output_path}")
 
     return trajectory
