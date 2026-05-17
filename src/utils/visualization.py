@@ -36,7 +36,7 @@ def plot_trajectory_2d(traj_est, traj_gt,
         color='blue',
         linewidth=2,
         linestyle='--',
-        label='Estimated (VO)'
+        label='Estimated (VO/VIO)'
     )
     
     # Mark start and end points

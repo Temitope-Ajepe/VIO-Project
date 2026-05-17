@@ -41,6 +41,41 @@ def align_trajectories(traj_est, traj_gt):
     
     return traj_est_aligned
 
+def align_se3(traj_est, traj_gt):
+    """
+    SE(3) alignment for VIO evaluation.
+    Aligns rotation and translation ONLY.
+    Does NOT correct scale (IMU provides metric scale).
+    
+    Args:
+        traj_est: Nx3 estimated positions
+        traj_gt:  Nx3 ground truth positions
+    
+    Returns:
+        traj_est_aligned: SE(3) aligned trajectory
+    """
+    # Center both trajectories
+    mu_est = traj_est.mean(axis=0)
+    mu_gt  = traj_gt.mean(axis=0)
+    
+    est_centered = traj_est - mu_est
+    gt_centered  = traj_gt  - mu_gt
+
+    # Compute rotation using SVD (no scale!)
+    W = gt_centered.T @ est_centered
+    U, _, Vt = np.linalg.svd(W)
+    R = U @ Vt
+
+    # Handle reflection
+    if np.linalg.det(R) < 0:
+        Vt[-1, :] *= -1
+        R = U @ Vt
+
+    # Apply alignment WITHOUT scale correction
+    traj_est_aligned = (est_centered @ R.T) + mu_gt
+
+    return traj_est_aligned
+
 def compute_ate(traj_est, traj_gt):
     """
     Compute Absolute Trajectory Error (ATE).

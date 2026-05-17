@@ -128,8 +128,9 @@ def run_vio_pipeline(sequence_path, config_path, output_path):
         optimized_poses = optimizer.optimize()
 
         # Step 7: Update trajectory
-        position = optimized_poses[-1][:3, 3]
-        trajectory.append(position.copy())
+        # Store full optimized pose matrix
+        optimized_pose = optimized_poses[-1].copy()
+        trajectory.append(optimized_pose)
         poses.append(new_pose)
 
         if i % 50 == 0:
@@ -139,12 +140,12 @@ def run_vio_pipeline(sequence_path, config_path, output_path):
         prev_kp, prev_des = curr_kp, curr_des
         prev_timestamp = curr_timestamp
 
-    # ── 4. Save trajectory ───────────────────────────────
+# 4. Save trajectory 
     save_trajectory(
-    trajectory,
-    output_path,
-    timestamps=loader.timestamps[:len(trajectory)]
-)
+        trajectory,
+        output_path,
+        timestamps=loader.timestamps[:len(trajectory)]
+    )
     print(f"VIO Trajectory saved to {output_path}")
 
     return trajectory
@@ -155,8 +156,20 @@ if __name__ == "__main__":
     os.makedirs("results/plots", exist_ok=True)
     os.makedirs("results/tables", exist_ok=True)
 
+    #run_vio_pipeline(
+    #    sequence_path="data/dataset-room2_512_16",
+    #    config_path="configs/tum_vi.yaml",
+    #    output_path="results/trajectories/room2_vio.txt"
+    #)
+
+    #run_vio_pipeline(
+    #    sequence_path="data/dataset-corridor3_512_16",
+    #    config_path="configs/tum_vi.yaml",
+    #    output_path="results/trajectories/corridor3_vio.txt"
+    #)
+
     run_vio_pipeline(
-        sequence_path="data/dataset-room2_512_16",
+        sequence_path="data/dataset-outdoors5_512_16",
         config_path="configs/tum_vi.yaml",
-        output_path="results/trajectories/room2_vio.txt"
+        output_path="results/trajectories/outdoors5_vio.txt"
     )
