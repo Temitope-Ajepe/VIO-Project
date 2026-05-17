@@ -90,12 +90,24 @@ if __name__ == "__main__":
     os.makedirs("results/tables", exist_ok=True)
 
 
-    run_vo_pipeline(
+
+#run_vo_pipeline(
+#    sequence_path="data/dataset-room2_512_16",
+#    config_path="configs/tum_vi.yaml",
+#    output_path="results/trajectories/room2_vo.txt"
+#)
+
+run_vo_pipeline(
     sequence_path="data/dataset-outdoors5_512_16",
     config_path="configs/tum_vi.yaml",
     output_path="results/trajectories/outdoors5_vo.txt"
 )
 
+#run_vo_pipeline(
+#    sequence_path="data/dataset-corridor3_512_16",
+#    config_path="configs/tum_vi.yaml",
+#    output_path="results/trajectories/corridor3_vo.txt"
+#)
 
 
 
