@@ -22,4 +22,4 @@ Thumbs.db
 .idea/
 
 # Results
-results/trajectories/
+#results/trajectories/
