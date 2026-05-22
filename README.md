@@ -1,6 +1,7 @@
 ## Project Topic:
 
-     Monocular Visual Odometry to Visual-Inertial Odometry on TUM VI
+     From Monocular Visual Odometry to Visual-Inertial Odometry on TUM VI
+     
 
 ## Supervisor:
 
@@ -59,3 +60,8 @@
 
 - Ajepe Fiyinfoluwa
 - Jordan Fogan
+
+
+## Project Deliverables
+* [Read the Final IEEE-Style Paper (PDF)](./paper/VO_to_VIO_Paper.pdf)
+* [View the Project Defense Poster (PDF)](./paper/VO_to_VIO_Poster.pdf)
