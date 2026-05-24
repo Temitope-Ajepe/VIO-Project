@@ -92,6 +92,7 @@ def plot_trajectory_3d(traj_est, traj_gt,
     ax.set_ylabel('Y (m)')
     ax.set_zlabel('Z (m)')
     ax.legend()
+    ax.set_box_aspect([1,1,1])
     
     if save_path:
         plt.savefig(save_path, dpi=150, bbox_inches='tight')

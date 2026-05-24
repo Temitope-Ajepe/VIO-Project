@@ -9,7 +9,7 @@
 
 ## Project OverView
 
-    This repository contains the implementation of a geometry based VIO pipeline, developed as part of a Master's Course in Computer Vision and Robotics. The project transitions from a Monocular Visual Odometry (VO) baseline to a tightly-coupled VIO system using IMU preintegration and sliding-window optimization.
+    This repository contains the implementation of a geometry based VIO pipeline, developed as part of a Master's Course in Computer Vision and Robotics. The project transitions transitions from a Monocular Visual Odometry (VO) baseline to a loosely-coupled VIO system using IMU preintegration and sliding-window pose optimization.
 
 ## Project Goal
 
@@ -30,7 +30,7 @@
 │ │ └── pipeline.py # Main VO pipeline
 │ ├── vio/ #Part 2: Visual-Inertial Odometry
 │ │ ├── imu_preintegration.py # IMU preintegration between keyframes
-│ │ ├── sliding_window.py # Sliding-window Bundle Adjustment
+│ │ ├── sliding_window.py # Sliding-window pose optimizer with IMU factors
 │ │ └── pipeline.py # Main VIO pipeline
 │ ├── utils/
 │ │ ├── data_loader.py # TUM VI data loading
@@ -59,7 +59,7 @@
 ## Team
 
 - Ajepe Fiyinfoluwa
-- Jordan Fogan
+- Jordan Fogang
 
 
 ## Project Deliverables
